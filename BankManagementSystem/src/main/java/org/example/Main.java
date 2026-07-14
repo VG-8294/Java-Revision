@@ -6,13 +6,10 @@ import java.util.*;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main() {
-        Scanner sc = new Scanner(System.in);
         Menu menu = new Menu();
         boolean key = false;
         while (!key) {
-            menu.mainMenu();
-            int ch = sc.nextInt();
-            sc.nextLine();
+            int ch = menu.mainMenu();
             switch (ch) {
                 case 1:
                     menu.registerMenu();

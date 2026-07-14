@@ -9,11 +9,14 @@ public class Menu {
 
     BankService bs = new BankService();
 
-    public void mainMenu(){
+    public int mainMenu(){
         System.out.println("1. Open a new Account");
         System.out.println("2. Login to existing Account");
         System.out.println("3. Exit");
         System.out.println("Enter your choice: ");
+        int ch = sc.nextInt();
+        sc.nextLine();
+        return ch;
     }
 
     public void registerMenu(){
