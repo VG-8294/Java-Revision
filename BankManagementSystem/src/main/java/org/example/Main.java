@@ -1,29 +1,18 @@
 package org.example;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main() {
-//        SavingsAccount sv = new SavingsAccount(5000);
-//        sv.deposit(2000);
-//        sv.checkBalance();
-//        sv.withdraw(3000);
-//        sv.checkBalance();
-//
-//        CurrentAccount ca = new CurrentAccount(20000, 20000);
-//        ca.checkBalance();
-//        ca.withdraw(30000);
-//        ca.checkBalance();
-        List<User> allUsers = new ArrayList<>();
+        Map<User, BankAccount> usersMap = new HashMap<>();
         boolean key = false;
         Scanner sc = new Scanner(System.in);
         while(!key){
             System.out.println("1. Open a new Account");
             System.out.println("2. Login to existing Account");
+            System.out.println("3. Exit");
             System.out.println("Enter your choice: ");
             int ch = sc.nextInt();
             switch(ch){
@@ -45,11 +34,12 @@ public class Main {
                     User user = new User(name, email, pass, age);
                     if(acc == 1){
                         SavingsAccount sv = new SavingsAccount(bal);
+                        usersMap.put(user, sv);
                     }
                     else{
                         CurrentAccount ca = new CurrentAccount(bal, 10000);
+                        usersMap.put(user, ca);
                     }
-                    allUsers.add(user);
                     System.out.println("Congratulations, Your account has been created!");
                     break;
                 case 2:
@@ -58,33 +48,49 @@ public class Main {
                     System.out.println("Enter your password");
                     String password = sc.next();
                     boolean found = false;
-                    for(User u: allUsers){
-                        if(u.getEmail().equals(mail) && u.getPassword().equals(password)) {
+                    for(Map.Entry<User, BankAccount> entry: usersMap.entrySet()){
+                        String userMail = entry.getKey().getEmail();
+                        String userPass = entry.getKey().getPassword();
+                        if(userMail.equals(mail) && userPass.equals(password)){
+                            System.out.println("Logged in successfully!");
                             found = true;
-                            System.out.println("You are logged in successfully!");
+                            BankAccount b = entry.getValue();
+                            boolean innerKey = false;
+                            while(!innerKey){
+                                System.out.println("1. Deposit");
+                                System.out.println("2. Withdraw");
+                                System.out.println("3. Check your balance");
+                                System.out.println("4. Exit");
+                                System.out.println("Enter your choice");
+                                int choice = sc.nextInt();
+                                switch(choice){
+                                    case 1:
+                                        System.out.println("Enter the amount you want to deposit:");
+                                        double depositAmt = sc.nextDouble();
+                                        b.deposit(depositAmt);
+                                        break;
+                                    case 2:
+                                        System.out.println("Enter the amount you want to withdraw:");
+                                        double withdrawAmt = sc.nextDouble();
+                                        b.withdraw(withdrawAmt);
+                                        break;
+                                    case 3:
+                                        double balAmt = b.checkBalance();
+                                        System.out.println("Your bank balance is :" + balAmt);
+                                        break;
+                                    case 4:
+                                        innerKey = true;
+                                        break;
+                                }
+                            }
                         }
                     }
                     if(!found){
                         System.out.println("Invalid email or password");
                     }
-                    else{
-                        boolean innerKey = false;
-                        while(!innerKey){
-                            System.out.println("1. Deposit");
-                            System.out.println("2. Withdraw");
-                            System.out.println("3. Check your balance");
-                            System.out.println("Enter your choice");
-                            int choice = sc.nextInt();
-                            switch(choice){
-                                case 1:
-
-
-                            }
-                        }
-                    }
                     break;
 
-                default:
+                case 3:
                     key = true;
                     break;
             }
