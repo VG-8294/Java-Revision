@@ -15,4 +15,7 @@ public class SavingsAccount extends BankAccount{
             System.out.println("Successfully withdrawn");
         }
     }
+    public double calculateInterest(){
+        return balance*0.03;
+    }
 }
