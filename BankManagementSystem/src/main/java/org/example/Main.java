@@ -15,18 +15,19 @@ public class Main {
             System.out.println("3. Exit");
             System.out.println("Enter your choice: ");
             int ch = sc.nextInt();
+            sc.nextLine();
             switch(ch){
                 case 1:
                     System.out.println("Enter your name");
-                    String name = sc.next();
+                    String name = sc.nextLine();
                     System.out.println("Enter your email");
                     String email = sc.next();
                     System.out.println("Enter your password");
                     String pass = sc.next();
                     System.out.println("Enter your age");
                     int age = sc.nextInt();
-                    System.out.println("Which type of account you want?" +
-                            "1. Saving" +
+                    System.out.println("Which type of account you want?\n" +
+                            "1. Saving\n" +
                             "2. Current");
                     int acc = sc.nextInt();
                     System.out.println("Enter your initial balance: ");
