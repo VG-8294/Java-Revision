@@ -9,21 +9,7 @@ public class Main {
         ConsoleUI ui = new ConsoleUI();
         Map<User, BankAccount> usersMap = new HashMap<>();
         BankService bankService = new BankService(usersMap, ui);
-        boolean key = false;
-        while (!key) {
-            int ch = ui.mainMenu();
-            switch (ch) {
-                case 1:
-                    bankService.registerUser();
-                    break;
-                case 2:
-                    bankService.loginUser();
-                    break;
 
-                case 3:
-                    key = true;
-                    break;
-            }
-        }
+        bankService.start();
     }
 }

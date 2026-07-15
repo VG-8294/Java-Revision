@@ -4,14 +4,33 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class BankService {
-    private Map<User, BankAccount> usersMap ;
+    private final Map<User, BankAccount> usersMap ;
     private ConsoleUI ui;
     public BankService(Map<User, BankAccount> usersMap, ConsoleUI ui) {
         this.usersMap = usersMap;
         this.ui = ui;
     }
 
-    public void registerUser(){
+    public void start(){
+        boolean key = false;
+        while (!key) {
+            int ch = ui.mainMenu();
+            switch (ch) {
+                case 1:
+                    registerUser();
+                    break;
+                case 2:
+                    loginUser();
+                    break;
+
+                case 3:
+                    key = true;
+                    break;
+            }
+        }
+    }
+
+    private void registerUser(){
             RegisterRequest rr = ui.registerMenu();
             User user = new User(rr.getName(), rr.getEmail(), rr.getPassword(), rr.getAge());
             if(rr.isAcc()){
@@ -30,22 +49,32 @@ public class BankService {
             String userMail = entry.getKey().getEmail();
             String userPass = entry.getKey().getPassword();
             if (userMail.equals(mail) && userPass.equals(password)) {
-                BankAccount b = entry.getValue();
-                return b;
+                return entry.getValue();
             }
         }
         return null;
     }
 
-    public void loginUser(){
+    private boolean isSavings(BankAccount b){
+        return b instanceof SavingsAccount;
+    }
+
+    private void loginUser(){
             LoginRequest lr = ui.loginMenu();
             BankAccount b = authenticate(lr.getEmail(), lr.getPassword());
-            if (b instanceof SavingsAccount) {
+            if(b != null){
                 ui.greeting();
                 boolean innerKey = false;
                 while (!innerKey) {
-                    int choice = ui.SavingsMenu();
-                    switch (choice) {
+                    int ch;
+
+                    if(isSavings(b)){
+                        ch = ui.SavingsMenu();
+                    }
+                    else{
+                        ch = ui.currentMenu();
+                    }
+                    switch (ch) {
                         case 1:
                             double depositAmt = ui.deposit();
                             b.deposit(depositAmt);
@@ -59,35 +88,18 @@ public class BankService {
                             ui.balance(balAmt);
                             break;
                         case 4:
-                            double inter = ((SavingsAccount) b).calculateInterest();
-                            ui.interest(inter);
+                            if(isSavings(b)){
+                                double inter = ((SavingsAccount) b).calculateInterest();
+                                ui.interest(inter);
+                            }
+                            else{
+                                innerKey = true;
+                            }
                             break;
                         case 5:
-                            innerKey = true;
-                            break;
-                    }
-                }
-            }
-            else if(b instanceof CurrentAccount){
-                ui.greeting();
-                boolean innerKey = false;
-                while (!innerKey) {
-                    int choice = ui.currentMenu();
-                    switch (choice) {
-                        case 1:
-                            double depositAmt = ui.deposit();
-                            b.deposit(depositAmt);
-                            break;
-                        case 2:
-                            double withdrawAmt = ui.withdraw();
-                            b.withdraw(withdrawAmt);
-                            break;
-                        case 3:
-                            double balAmt = b.checkBalance();
-                            ui.balance(balAmt);
-                            break;
-                        case 4:
-                            innerKey = true;
+                            if(b instanceof SavingsAccount){
+                                innerKey = true;
+                            }
                             break;
                     }
                 }
@@ -95,6 +107,6 @@ public class BankService {
             else{
                 ui.warning();
             }
-        }
     }
+}
 
