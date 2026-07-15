@@ -7,15 +7,17 @@ import java.util.*;
 public class Main {
     public static void main() {
         Menu menu = new Menu();
+        AfterLogin afterLogin = new AfterLogin(menu);
+        BankService bankService = new BankService(afterLogin, menu);
         boolean key = false;
         while (!key) {
             int ch = menu.mainMenu();
             switch (ch) {
                 case 1:
-                    menu.registerMenu();
+                    bankService.registerUser();
                     break;
                 case 2:
-                    menu.loginMenu();
+                    bankService.loginUser();
                     break;
 
                 case 3:

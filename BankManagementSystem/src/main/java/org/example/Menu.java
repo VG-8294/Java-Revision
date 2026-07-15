@@ -7,8 +7,6 @@ import java.util.Scanner;
 public class Menu {
     Scanner sc = new Scanner(System.in);
 
-    BankService bs = new BankService();
-
     public int mainMenu(){
         System.out.println("1. Open a new Account");
         System.out.println("2. Login to existing Account");
@@ -19,7 +17,7 @@ public class Menu {
         return ch;
     }
 
-    public void registerMenu(){
+    public RegisterRequest registerMenu(){
         System.out.println("Enter your name");
         String name = sc.nextLine();
         System.out.println("Enter your email");
@@ -31,19 +29,25 @@ public class Menu {
         System.out.println("Which type of account you want?\n" +
                 "1. Saving\n" +
                 "2. Current");
-        int acc = sc.nextInt();
+        int accNo = sc.nextInt();
+        boolean acc = false;
+        if(accNo == 1){
+            acc = true;
+        }
         System.out.println("Enter your initial balance: ");
         double bal = sc.nextDouble();
-        bs.registerUser(name, email, pass, age, acc, bal);
-
+        RegisterRequest rr = new RegisterRequest(name, email, pass, age, acc, bal);
+        return rr;
     }
 
-    public void loginMenu(){
+    public LoginRequest loginMenu(){
         System.out.println("Enter your email");
         String mail = sc.next();
         System.out.println("Enter your password");
         String password = sc.next();
-        bs.loginUser(mail, password);
+        Map<String, String> mp = new HashMap<>();
+        return new LoginRequest(mail, password);
+//        bs.loginUser(mail, password);
     }
 
     public void savingsMenu(){
@@ -62,4 +66,54 @@ public class Menu {
         System.out.println("5. Exit");
         System.out.println("Enter your choice");
     }
+
+
+//    public void afterOptionSavings(int choice, BankAccount b, boolean key){
+//        switch (choice) {
+//            case 1:
+//                System.out.println("Enter the amount you want to deposit:");
+//                double depositAmt = sc.nextDouble();
+//                b.deposit(depositAmt);
+//                break;
+//            case 2:
+//                System.out.println("Enter the amount you want to withdraw:");
+//                double withdrawAmt = sc.nextDouble();
+//                b.withdraw(withdrawAmt);
+//                break;
+//            case 3:
+//                double balAmt = b.checkBalance();
+//                System.out.println("Your bank balance is :" + balAmt);
+//                break;
+//            case 4:
+//                double inter = ((SavingsAccount) b).calculateInterest();
+//                System.out.println("Your interest amount is: " + inter);
+//                break;
+//            case 5:
+//                key = true;
+//                break;
+//        }
+//    }
+//
+//    public void afterOptionCurrent(int choice, BankAccount b, boolean key){
+//        switch (choice) {
+//            case 1:
+//                System.out.println("Enter the amount you want to deposit:");
+//                double depositAmt = sc.nextDouble();
+//                b.deposit(depositAmt);
+//                break;
+//            case 2:
+//                System.out.println("Enter the amount you want to withdraw:");
+//                double withdrawAmt = sc.nextDouble();
+//                b.withdraw(withdrawAmt);
+//                break;
+//            case 3:
+//                double balAmt = b.checkBalance();
+//                System.out.println("Your bank balance is :" + balAmt);
+//                break;
+//            case 4:
+//                key = true;
+//                break;
+//        }
+//    }
+
 }
