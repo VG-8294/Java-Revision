@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class Menu {
+public class ConsoleUI {
     Scanner sc = new Scanner(System.in);
 
     public int mainMenu(){
@@ -47,73 +47,57 @@ public class Menu {
         String password = sc.next();
         Map<String, String> mp = new HashMap<>();
         return new LoginRequest(mail, password);
-//        bs.loginUser(mail, password);
     }
 
-    public void savingsMenu(){
+
+    public void greeting(){
+        System.out.println("Logged in successfully!");
+        System.out.println("<--------Welcome to your Account-------->");
+    }
+
+    public int SavingsMenu(){
         System.out.println("1. Deposit");
         System.out.println("2. Withdraw");
         System.out.println("3. Check your balance");
         System.out.println("4. Check your interest amount");
         System.out.println("5. Exit");
         System.out.println("Enter your choice");
+        return sc.nextInt();
     }
 
-    public void currentMenu(){
+    public double deposit(){
+        System.out.println("Enter the amount you want to deposit:");
+        return sc.nextDouble();
+    }
+
+    public double withdraw(){
+        System.out.println("Enter the amount you want to withdraw:");
+        return sc.nextDouble();
+    }
+
+    public void balance(double bal){
+        System.out.println("Your bank balance is :" + bal);
+    }
+
+    public void interest(double inter){
+        System.out.println("Your interest amount is: " + inter);
+    }
+
+    public int currentMenu(){
         System.out.println("1. Deposit");
         System.out.println("2. Withdraw");
         System.out.println("3. Check your balance");
-        System.out.println("5. Exit");
+        System.out.println("4. Exit");
         System.out.println("Enter your choice");
+        return sc.nextInt();
     }
 
+    public void warning(){
+        System.out.println("Invalid email or password!");
+    }
 
-//    public void afterOptionSavings(int choice, BankAccount b, boolean key){
-//        switch (choice) {
-//            case 1:
-//                System.out.println("Enter the amount you want to deposit:");
-//                double depositAmt = sc.nextDouble();
-//                b.deposit(depositAmt);
-//                break;
-//            case 2:
-//                System.out.println("Enter the amount you want to withdraw:");
-//                double withdrawAmt = sc.nextDouble();
-//                b.withdraw(withdrawAmt);
-//                break;
-//            case 3:
-//                double balAmt = b.checkBalance();
-//                System.out.println("Your bank balance is :" + balAmt);
-//                break;
-//            case 4:
-//                double inter = ((SavingsAccount) b).calculateInterest();
-//                System.out.println("Your interest amount is: " + inter);
-//                break;
-//            case 5:
-//                key = true;
-//                break;
-//        }
-//    }
-//
-//    public void afterOptionCurrent(int choice, BankAccount b, boolean key){
-//        switch (choice) {
-//            case 1:
-//                System.out.println("Enter the amount you want to deposit:");
-//                double depositAmt = sc.nextDouble();
-//                b.deposit(depositAmt);
-//                break;
-//            case 2:
-//                System.out.println("Enter the amount you want to withdraw:");
-//                double withdrawAmt = sc.nextDouble();
-//                b.withdraw(withdrawAmt);
-//                break;
-//            case 3:
-//                double balAmt = b.checkBalance();
-//                System.out.println("Your bank balance is :" + balAmt);
-//                break;
-//            case 4:
-//                key = true;
-//                break;
-//        }
-//    }
+    public void congrats(){
+        System.out.println("Congratulations, Your account has been created!");
+    }
 
 }
