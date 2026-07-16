@@ -15,9 +15,10 @@ public class BankService {
     private final Map<User, BankAccount> usersMap ;
     private ConsoleUI ui;
     Validations valid;
-    public BankService(Map<User, BankAccount> usersMap, ConsoleUI ui) {
+    public BankService(Map<User, BankAccount> usersMap, ConsoleUI ui, Validations valid) {
         this.usersMap = usersMap;
         this.ui = ui;
+        this.valid = valid;
     }
 
     public void start(){
@@ -67,6 +68,10 @@ public class BankService {
     private boolean isSavings(BankAccount b){
         return b instanceof SavingsAccount;
     }
+    private boolean isCurrent(BankAccount b){
+        return b instanceof CurrentAccount;
+    }
+
 
     private void loginUser(){
             LoginRequest lr = ui.loginMenu();
@@ -87,14 +92,33 @@ public class BankService {
                         case 1:
                             double depositAmt = ui.deposit();
                             b.deposit(depositAmt);
+                            ui.depositGreet();
                             break;
                         case 2:
                             double withdrawAmt =  ui.withdraw();
-                            b.withdraw(withdrawAmt);
+                            if(valid.validateBalSavings(b.checkBalance(), withdrawAmt) && isSavings(b)){
+                                b.withdraw(withdrawAmt);
+                                ui.withdrawGreet();
+                            } else if (valid.validateBalCurrent(b.checkBalance(), ((CurrentAccount)b).getOverDraft() , withdrawAmt) && isCurrent(b)) {
+                                b.withdraw(withdrawAmt);
+                                ui.withdrawGreet();
+                                if(b.checkBalance() < 0){
+                                    ui.withdrawGreetCurr(b.checkBalance());
+                                }
+                            } else{
+                                if(isSavings(b)){
+                                    ui.withdrawWarnSavings();
+                                }
+                                else{
+                                    ui.withdrawWarnCurrent();
+                                }
+                            }
                             break;
                         case 3:
                             double balAmt = b.checkBalance();
-                            ui.balance(balAmt);
+                            if(isSavings(b)){
+                                ui.balance(balAmt);
+                            }
                             break;
                         case 4:
                             if(isSavings(b)){
