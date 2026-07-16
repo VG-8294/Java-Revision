@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
+import static java.lang.Math.abs;
+
 public class ConsoleUI {
     Scanner sc = new Scanner(System.in);
     Validations valid = new Validations();
@@ -116,6 +118,27 @@ public class ConsoleUI {
 
     public void warning(){
         System.out.println("Invalid email or password!");
+    }
+
+    public void withdrawWarnSavings(){
+        System.out.println("Balance is not enough");
+    }
+
+    public void withdrawWarnCurrent(){
+        System.out.println("Overdraft limit exceeded");
+    }
+
+
+    public void withdrawGreet(){
+        System.out.println("Successfully withdrawn");
+    }
+
+    public void withdrawGreetCurr(Double amt){
+        System.out.println("But you owe bank a sum of " + abs(amt));
+    }
+
+    public void depositGreet(){
+        System.out.println("Amount deposited!");
     }
 
     public void congrats(){

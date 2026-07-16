@@ -10,10 +10,11 @@ public abstract class BankAccount {
 
     public void deposit(double amt){
         balance += amt;
-        System.out.println("Amount deposited!");
     }
 
-    public abstract void withdraw(double amt);
+    public void withdraw(double amt){
+        balance -= amt;
+    }
 
     public double checkBalance(){
         return balance;

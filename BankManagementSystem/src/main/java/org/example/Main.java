@@ -15,7 +15,7 @@ public class Main {
         Validations valid = new Validations();
         ConsoleUI ui = new ConsoleUI();
         Map<User, BankAccount> usersMap = new HashMap<>();
-        BankService bankService = new BankService(usersMap, ui);
+        BankService bankService = new BankService(usersMap, ui, valid);
 
         bankService.start();
     }
