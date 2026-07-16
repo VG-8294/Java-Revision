@@ -53,16 +53,14 @@ public class BankService {
             }
            ui.congrats();
     }
-
+    //Java 8 implementation - Streams
     private BankAccount authenticate(String mail, String password){
-        for (Map.Entry<User, BankAccount> entry : usersMap.entrySet()) {
-            String userMail = entry.getKey().getEmail();
-            String userPass = entry.getKey().getPassword();
-            if (userMail.equals(mail) && userPass.equals(password)) {
-                return entry.getValue();
-            }
-        }
-        return null;
+        return usersMap.entrySet()
+                .stream()
+                .filter(entry -> entry.getKey().getEmail().equals(mail) && entry.getKey().getPassword().equals(password))
+                .map(Map.Entry::getValue)  // method-reference implementation
+                .findFirst()
+                .orElse(null);
     }
 
     private boolean isSavings(BankAccount b){

@@ -12,7 +12,12 @@ import static java.lang.Math.abs;
 
 public class ConsoleUI {
     Scanner sc = new Scanner(System.in);
-    Validations valid = new Validations();
+    Validations valid;
+
+    public ConsoleUI(Validations valid) {
+        this.valid = valid;
+    }
+
     public int mainMenu(){
         System.out.println("1. Open a new Account");
         System.out.println("2. Login to existing Account");
@@ -28,9 +33,14 @@ public class ConsoleUI {
         String name = sc.nextLine();
         System.out.println("Enter your email");
         String email = sc.next();
+        while(valid.duplicateMail(email)){
+            System.out.println("Sorry! User Already exists with this mail id");
+            System.out.println("Enter your email again");
+            email = sc.next();
+        }
         while(valid.validateEmail(email)){
             System.out.println("Email is not in correct format");
-            System.out.println("Enter your email");
+            System.out.println("Enter your email again");
             email = sc.next();
         }
         System.out.println("Enter your password");
