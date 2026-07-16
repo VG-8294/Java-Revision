@@ -6,11 +6,14 @@ import java.util.function.Predicate;
 
 public class Validations {
 
+
+    // Java - 8 implementation - Predicates
     public boolean validateBalance(double bal){
         Predicate<Double> pred = x -> x < 10000;
         return pred.test(bal);
     }
 
+    // Java - 8 implementation - BiPredicates
     public boolean validateBalSavings(double bal , double amt){
         BiPredicate<Double, Double> isBalLessOrMore = (x, y) -> x > y;
         return isBalLessOrMore.test(bal, amt);
