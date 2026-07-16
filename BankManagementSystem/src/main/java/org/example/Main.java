@@ -1,5 +1,11 @@
 package org.example;
 
+import org.example.Entity.BankAccount;
+import org.example.Entity.User;
+import org.example.Service.BankService;
+import org.example.UI.ConsoleUI;
+import org.example.Validations.Validations;
+
 import java.util.*;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or

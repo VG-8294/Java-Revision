@@ -1,12 +1,12 @@
-package org.example;
+package org.example.Entity;
 
-public class SavingsAccount extends BankAccount{
+public class SavingsAccount extends BankAccount {
     public SavingsAccount(double balance) {
         super(balance);
     }
 
     @Override
-    void withdraw(double amt) {
+    public void withdraw(double amt) {
         if(amt > balance){
             System.out.println("Balance not enough");
         }

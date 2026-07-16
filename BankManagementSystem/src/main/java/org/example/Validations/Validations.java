@@ -1,4 +1,4 @@
-package org.example;
+package org.example.Validations;
 
 import java.util.function.Predicate;
 

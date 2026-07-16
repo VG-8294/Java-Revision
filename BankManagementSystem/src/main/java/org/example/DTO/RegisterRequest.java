@@ -1,4 +1,4 @@
-package org.example;
+package org.example.DTO;
 
 public class RegisterRequest {
     private String name;

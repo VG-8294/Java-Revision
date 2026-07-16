@@ -1,8 +1,8 @@
-package org.example;
+package org.example.Entity;
 
 import static java.lang.Math.abs;
 
-public class CurrentAccount extends BankAccount{
+public class CurrentAccount extends BankAccount {
     private final double overDraft;
     public CurrentAccount(double balance, double overDraft) {
         super(balance);
@@ -10,7 +10,7 @@ public class CurrentAccount extends BankAccount{
     }
 
     @Override
-    void withdraw(double amt) {
+    public void withdraw(double amt) {
         if(amt > overDraft + balance){
             System.out.println("Overdraft limit exceeded");
         }

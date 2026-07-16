@@ -1,7 +1,15 @@
-package org.example;
+package org.example.Service;
+
+import org.example.Entity.BankAccount;
+import org.example.Entity.CurrentAccount;
+import org.example.Entity.SavingsAccount;
+import org.example.DTO.LoginRequest;
+import org.example.DTO.RegisterRequest;
+import org.example.Entity.User;
+import org.example.UI.ConsoleUI;
+import org.example.Validations.Validations;
 
 import java.util.Map;
-import java.util.Scanner;
 
 public class BankService {
     private final Map<User, BankAccount> usersMap ;

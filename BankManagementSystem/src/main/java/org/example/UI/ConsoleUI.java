@@ -1,4 +1,8 @@
-package org.example;
+package org.example.UI;
+
+import org.example.DTO.LoginRequest;
+import org.example.DTO.RegisterRequest;
+import org.example.Validations.Validations;
 
 import java.util.HashMap;
 import java.util.Map;

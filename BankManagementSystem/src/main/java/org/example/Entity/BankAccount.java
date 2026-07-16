@@ -1,6 +1,6 @@
-package org.example;
+package org.example.Entity;
 
-abstract class BankAccount {
+public abstract class BankAccount {
     protected double balance;
     protected double amount;
 
@@ -13,7 +13,7 @@ abstract class BankAccount {
         System.out.println("Amount deposited!");
     }
 
-    abstract void withdraw(double amt);
+    public abstract void withdraw(double amt);
 
     public double checkBalance(){
         return balance;
