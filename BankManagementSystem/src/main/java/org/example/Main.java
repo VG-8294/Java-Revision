@@ -12,9 +12,9 @@ import java.util.*;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main() {
-        Validations valid = new Validations();
-        ConsoleUI ui = new ConsoleUI();
         Map<User, BankAccount> usersMap = new HashMap<>();
+        Validations valid = new Validations(usersMap);
+        ConsoleUI ui = new ConsoleUI(valid);
         BankService bankService = new BankService(usersMap, ui, valid);
 
         bankService.start();
