@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class ConsoleUI {
     Scanner sc = new Scanner(System.in);
-
+    Validations valid = new Validations();
     public int mainMenu(){
         System.out.println("1. Open a new Account");
         System.out.println("2. Login to existing Account");
@@ -22,8 +22,18 @@ public class ConsoleUI {
         String name = sc.nextLine();
         System.out.println("Enter your email");
         String email = sc.next();
+        while(valid.validateEmail(email)){
+            System.out.println("Email is not in correct format");
+            System.out.println("Enter your email");
+            email = sc.next();
+        }
         System.out.println("Enter your password");
         String pass = sc.next();
+        while(valid.validatePassword(pass)){
+            System.out.println("Password must contain uppercase and lowercase letters, numbers, and special characters");
+            System.out.println("Enter your password");
+            pass = sc.next();
+        }
         System.out.println("Enter your age");
         int age = sc.nextInt();
         System.out.println("Which type of account you want?\n" +
@@ -36,6 +46,11 @@ public class ConsoleUI {
         }
         System.out.println("Enter your initial balance: ");
         double bal = sc.nextDouble();
+        while(valid.validateBalance(bal)){
+            System.out.println("Your initial deposit should be atleast 10k");
+            System.out.println("Enter your initial balance: ");
+            bal = sc.nextDouble();
+        }
         RegisterRequest rr = new RegisterRequest(name, email, pass, age, acc, bal);
         return rr;
     }
@@ -77,6 +92,9 @@ public class ConsoleUI {
 
     public void balance(double bal){
         System.out.println("Your bank balance is :" + bal);
+        if(valid.validateBalance(bal)){
+            System.out.println("Your balance should be atleast 10k otherwise a penalty of 1000 will be charged!");
+        }
     }
 
     public void interest(double inter){

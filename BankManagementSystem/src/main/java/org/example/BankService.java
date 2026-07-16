@@ -6,6 +6,7 @@ import java.util.Scanner;
 public class BankService {
     private final Map<User, BankAccount> usersMap ;
     private ConsoleUI ui;
+    Validations valid;
     public BankService(Map<User, BankAccount> usersMap, ConsoleUI ui) {
         this.usersMap = usersMap;
         this.ui = ui;

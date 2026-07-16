@@ -16,7 +16,6 @@ abstract class BankAccount {
     abstract void withdraw(double amt);
 
     public double checkBalance(){
-        System.out.println("Your current balance is: " + balance);
         return balance;
     }
 }
