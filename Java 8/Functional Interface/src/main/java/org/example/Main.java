@@ -1,6 +1,7 @@
 package org.example;
 
 import java.lang.reflect.Array;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,5 +14,8 @@ public class Main {
         List<Integer> list = Arrays.asList(1, 2, 3, 4, 5);
         List<Integer> filteredList = list.stream().filter(x -> x%2 == 0).collect(Collectors.toList());
         System.out.println(filteredList);
+
+        LocalDate today = LocalDate.now();
+        System.out.println(today);
      }
 }
