@@ -1,24 +1,27 @@
 package org.example.Service;
 
-import org.example.Entity.BankAccount;
-import org.example.Entity.CurrentAccount;
-import org.example.Entity.SavingsAccount;
+import org.example.Entity.*;
 import org.example.DTO.LoginRequest;
 import org.example.DTO.RegisterRequest;
-import org.example.Entity.User;
 import org.example.UI.ConsoleUI;
 import org.example.Validations.Validations;
 
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class BankService {
     private final Map<User, BankAccount> usersMap ;
     private ConsoleUI ui;
     Validations valid;
-    public BankService(Map<User, BankAccount> usersMap, ConsoleUI ui, Validations valid) {
+    Admin admin;
+    public BankService(Map<User, BankAccount> usersMap, ConsoleUI ui, Validations valid, Admin admin) {
         this.usersMap = usersMap;
         this.ui = ui;
         this.valid = valid;
+        this.admin = admin;
     }
 
     public void start(){
@@ -34,10 +37,101 @@ public class BankService {
                     break;
 
                 case 3:
+                    loginAsAdmin();
+                    break;
+
+                case 4:
                     key = true;
                     break;
             }
         }
+    }
+
+    private void loginAsAdmin() {
+        LoginRequest lr = ui.loginMenu();
+        System.out.println(admin.getMail());
+        if(admin.getMail().equals(lr.getEmail()) && admin.getPassword().equals(lr.getPassword())){
+            boolean key = false;
+            while (!key) {
+                int ch = ui.AdminMenu();
+                switch (ch) {
+                    case 1:
+                        getUsersAlphabetically();
+                        break;
+                    case 2:
+                        double bal = ui.amt();
+                        getUsersOverSpecificBalance(bal);
+                        break;
+
+                    case 3:
+                        getUserWithMaxBalance();
+                        break;
+
+                    case 4:
+                        System.out.println( "Your bank has a total amount of "+ getTotalMoney());
+                        break;
+                    case 5:
+                        System.out.println("Total number of accounts in your bank is :" + getTotalNoOfAcc());
+                        break;
+                    case 6:
+                        getAllUsersEmail();
+                        break;
+
+                    case 7:
+                        sortAccByBalance();
+                        break;
+
+                    case 8:
+                        key = true;
+                        break;
+                }
+            }
+        }
+    }
+
+    private void getUsersAlphabetically() {
+        usersMap.keySet()
+                .stream()
+                .sorted(Comparator.comparing(User::getName))
+                .forEach(System.out::println);
+    }
+
+    private void sortAccByBalance() {
+        usersMap.entrySet()
+                .stream()
+                .sorted((x, y) -> (int) (x.getValue().checkBalance() - y.getValue().checkBalance()))
+                .forEach(x -> System.out.println(x.getValue()));
+    }
+
+    private void getAllUsersEmail() {
+        usersMap.keySet()
+                .forEach(entry -> System.out.println(entry.getEmail()));
+    }
+
+    private long getTotalNoOfAcc() {
+        return usersMap.size();
+    }
+
+    private double getTotalMoney() {
+        return usersMap.entrySet()
+                .stream()
+                .mapToDouble(x -> x.getValue().checkBalance())
+                .sum();
+    }
+
+    private void getUserWithMaxBalance() {
+        usersMap.entrySet()
+                .stream()
+                .max(Comparator.comparing(x -> x.getValue().checkBalance()))
+                .map(Map.Entry::getKey)
+                .ifPresent(System.out::println);
+    }
+
+    private void getUsersOverSpecificBalance(double i) {
+        usersMap.entrySet()
+                .stream()
+                .filter(x -> x.getValue().checkBalance() > i)
+                .forEach(x -> System.out.println(x.getKey().toString()));
     }
 
     private void registerUser(){
@@ -94,28 +188,52 @@ public class BankService {
                             break;
                         case 2:
                             double withdrawAmt =  ui.withdraw();
-                            if(valid.validateBalSavings(b.checkBalance(), withdrawAmt) && isSavings(b)){
-                                b.withdraw(withdrawAmt);
-                                ui.withdrawGreet();
-                            } else if (valid.validateBalCurrent(b.checkBalance(), ((CurrentAccount)b).getOverDraft() , withdrawAmt) && isCurrent(b)) {
-                                b.withdraw(withdrawAmt);
-                                ui.withdrawGreet();
-                                if(b.checkBalance() < 0){
-                                    ui.withdrawGreetCurr(b.checkBalance());
+                            if(isSavings(b)){
+                                if(valid.validateBalSavings(b.checkBalance(), withdrawAmt)){
+                                    b.withdraw(withdrawAmt);
+                                    ui.withdrawGreet();
                                 }
-                            } else{
-                                if(isSavings(b)){
+                                else{
                                     ui.withdrawWarnSavings();
+                                }
+                            }
+                            else{
+                                if(valid.validateBalCurrent(b.checkBalance(), ((CurrentAccount)b).getOverDraft() , withdrawAmt)){
+                                    b.withdraw(withdrawAmt);
+                                    ui.withdrawGreet();
+                                    if(b.checkBalance() < 0){
+                                        ui.withdrawGreetCurr(b.checkBalance());
+                                    }
                                 }
                                 else{
                                     ui.withdrawWarnCurrent();
                                 }
                             }
+//                            if(valid.validateBalSavings(b.checkBalance(), withdrawAmt) && isSavings(b)){
+//                                b.withdraw(withdrawAmt);
+//                                ui.withdrawGreet();
+//                            } else if (valid.validateBalCurrent(b.checkBalance(), ((CurrentAccount)b).getOverDraft() , withdrawAmt) && isCurrent(b)) {
+//                                b.withdraw(withdrawAmt);
+//                                ui.withdrawGreet();
+//                                if(b.checkBalance() < 0){
+//                                    ui.withdrawGreetCurr(b.checkBalance());
+//                                }
+//                            } else{
+//                                if(isSavings(b)){
+//                                    ui.withdrawWarnSavings();
+//                                }
+//                                else{
+//                                    ui.withdrawWarnCurrent();
+//                                }
+//                            }
                             break;
                         case 3:
                             double balAmt = b.checkBalance();
                             if(isSavings(b)){
                                 ui.balance(balAmt);
+                            }
+                            else{
+                                System.out.println("Your balance is: " + balAmt);
                             }
                             break;
                         case 4:
