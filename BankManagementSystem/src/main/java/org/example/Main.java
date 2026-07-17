@@ -51,6 +51,35 @@ public class Main {
                 new User("Sneha", "sneha@gmail.com", "Sneha@123", 23),
                 new CurrentAccount(60000, 10000)
         );
+        usersMap.put(
+                new User("Ramesh Sharma", "ramesh@gmail.com", "Ramesh@123", 62),
+                new SavingsAccount(150000)
+        );
+
+        usersMap.put(
+                new User("Suresh Verma", "suresh@gmail.com", "Suresh@123", 68),
+                new CurrentAccount(95000, 10000)
+        );
+
+        usersMap.put(
+                new User("Anita Mehta", "anita@gmail.com", "Anita@123", 72),
+                new SavingsAccount(320000)
+        );
+
+        usersMap.put(
+                new User("Rajesh Gupta", "rajesh@gmail.com", "Rajesh@123", 65),
+                new CurrentAccount(210000, 10000)
+        );
+
+        usersMap.put(
+                new User("Sunita Kapoor", "sunita@gmail.com", "Sunita@123", 70),
+                new SavingsAccount(180000)
+        );
+
+        usersMap.put(
+                new User("Mahesh Joshi", "mahesh@gmail.com", "Mahesh@123", 61),
+                new SavingsAccount(125000)
+        );
         Validations valid = new Validations(usersMap);
         ConsoleUI ui = new ConsoleUI(valid);
         Admin admin = new Admin();

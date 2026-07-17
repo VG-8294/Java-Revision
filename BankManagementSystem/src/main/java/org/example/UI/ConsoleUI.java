@@ -4,9 +4,7 @@ import org.example.DTO.LoginRequest;
 import org.example.DTO.RegisterRequest;
 import org.example.Validations.Validations;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 import static java.lang.Math.abs;
 
@@ -81,6 +79,11 @@ public class ConsoleUI {
         return new LoginRequest(mail, password);
     }
 
+    public String emailRequest(){
+        System.out.println("Enter the email:");
+        return sc.next();
+    }
+
 
     public void greeting(){
         System.out.println("Logged in successfully!");
@@ -95,8 +98,25 @@ public class ConsoleUI {
         System.out.println("5. Total number of accounts in the bank");
         System.out.println("6. Get all users email");
         System.out.println("7. Sort account by balance");
-        System.out.println("8. Exit");
+        System.out.println("8. Search a user by email");
+        System.out.println("9. Get all old age users");
+        System.out.println("10. Sort users by age");
+        System.out.println("11. Get Users having Saving Account");
+        System.out.println("12. Get Users having Current Account");
+        System.out.println("13. Get Users b/w specific age");
+        System.out.println("14. Get Users less than a specific balance");
+        System.out.println("15. Exit");
         return sc.nextInt();
+    }
+
+    public List<Integer> askingAge(){
+        System.out.println("Enter the range of age");
+        System.out.println("Enter starting age:");
+        int age1 = sc.nextInt();
+        System.out.println("Enter ending age:");
+        int age2 = sc.nextInt();
+        List<Integer> ageList = Arrays.asList(age1, age2);
+        return ageList;
     }
 
     public int SavingsMenu(){
