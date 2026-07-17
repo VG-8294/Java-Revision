@@ -113,10 +113,6 @@ public class ConsoleUI {
         }
     }
 
-    public void interest(double inter){
-        System.out.println("Your interest amount is: " + inter);
-    }
-
     public int currentMenu(){
         System.out.println("1. Deposit");
         System.out.println("2. Withdraw");
@@ -124,6 +120,10 @@ public class ConsoleUI {
         System.out.println("4. Exit");
         System.out.println("Enter your choice");
         return sc.nextInt();
+    }
+
+    public void interest(double inter){
+        System.out.println("Your interest amount is: " + inter);
     }
 
     public void warning(){
