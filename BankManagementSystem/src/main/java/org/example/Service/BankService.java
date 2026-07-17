@@ -6,11 +6,9 @@ import org.example.DTO.RegisterRequest;
 import org.example.UI.ConsoleUI;
 import org.example.Validations.Validations;
 
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class BankService {
     private final Map<User, BankAccount> usersMap ;
@@ -80,13 +78,88 @@ public class BankService {
                     case 7:
                         sortAccByBalance();
                         break;
-
                     case 8:
+                        String mail = ui.emailRequest();
+                        getUserByEmail(mail);
+                        break;
+                    case 9:
+                        getOldAgeUsers();
+                        break;
+
+                    case 10:
+                        sortAllUsersByAge();
+                        break;
+
+                    case 11:
+                        getUsersHavingSaving();
+                        break;
+
+                    case 12:
+                        getUsersHavingCurrent();
+                        break;
+                    case 13:
+                        List<Integer> list = ui.askingAge();
+                        getUsersBwAge(list.get(0), list.get(1));
+                        break;
+                    case 14:
+                        double amt = ui.amt();
+                        getUsersLessThanBal(amt);
+                        break;
+                    case 15:
                         key = true;
                         break;
                 }
             }
         }
+    }
+
+    private void getUsersLessThanBal(double bal) {
+        usersMap.entrySet()
+                .stream()
+                .filter(x -> x.getValue().checkBalance() < bal)
+                .forEach(x -> System.out.println(x.getKey()));
+    }
+
+    private void getUsersBwAge(int age1, int age2){
+        usersMap.keySet()
+                .stream()
+                .filter(x -> x.getAge() > age1 && x.getAge() < age2)
+                .forEach(System.out::println);
+    }
+
+    private void getUsersHavingCurrent() {
+        usersMap.entrySet()
+                .stream()
+                .filter(x -> !isSavings(x.getValue()))
+                .forEach(x -> System.out.println(x.getKey()));
+    }
+
+    private void getUsersHavingSaving() {
+        usersMap.entrySet()
+                .stream()
+                .filter(x -> isSavings(x.getValue()))
+                .forEach(x-> System.out.println(x.getKey()));
+    }
+
+    private void sortAllUsersByAge() {
+        usersMap.keySet()
+                .stream()
+                .sorted(Comparator.comparing(User::getAge))
+                .forEach(System.out::println);
+    }
+
+    private void getOldAgeUsers() {
+        usersMap.keySet()
+                .stream()
+                .filter(x -> x.getAge() >= 60)
+                .forEach(System.out::println);
+    }
+
+    private void getUserByEmail(String mail) {
+        usersMap.keySet()
+                .stream()
+                .filter(x -> x.getEmail().equals(mail))
+                .forEach(System.out::println);
     }
 
     private void getUsersAlphabetically() {
@@ -159,9 +232,6 @@ public class BankService {
 
     private boolean isSavings(BankAccount b){
         return b instanceof SavingsAccount;
-    }
-    private boolean isCurrent(BankAccount b){
-        return b instanceof CurrentAccount;
     }
 
 

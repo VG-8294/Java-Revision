@@ -5,8 +5,8 @@ public class Admin {
     private String password;
 
     public Admin() {
-        this.mail = "SevaBank@mail.com";
-        this.password = "SEVAbank@7384";
+        this.mail = "Seva";
+        this.password = "Bank";
     }
 
     public String getMail() {

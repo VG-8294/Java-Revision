@@ -44,8 +44,19 @@ public class User {
     public void setAge(int age) {
         this.age = age;
     }
+//    @Override
+//    public String toString() {
+//        return "User{name='" + name + "', email='" + email + "'}";
+//    }
+
+
     @Override
     public String toString() {
-        return "User{name='" + name + "', email='" + email + "'}";
+        return "User{" +
+                "name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", age=" + age +
+                '}';
     }
 }
