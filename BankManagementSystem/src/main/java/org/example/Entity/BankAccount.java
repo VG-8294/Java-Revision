@@ -19,4 +19,12 @@ public abstract class BankAccount {
     public double checkBalance(){
         return balance;
     }
+
+    @Override
+    public String toString() {
+        return "BankAccount{" +
+                "balance=" + balance +
+                ", amount=" + amount +
+                '}';
+    }
 }

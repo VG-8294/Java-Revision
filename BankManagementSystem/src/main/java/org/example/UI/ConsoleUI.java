@@ -21,7 +21,8 @@ public class ConsoleUI {
     public int mainMenu(){
         System.out.println("1. Open a new Account");
         System.out.println("2. Login to existing Account");
-        System.out.println("3. Exit");
+        System.out.println("3. Login as Admin");
+        System.out.println("4. Exit");
         System.out.println("Enter your choice: ");
         int ch = sc.nextInt();
         sc.nextLine();
@@ -86,6 +87,18 @@ public class ConsoleUI {
         System.out.println("<--------Welcome to your Account-------->");
     }
 
+    public int AdminMenu(){
+        System.out.println("1. Get all users alphabetically");
+        System.out.println("2. Get all users above a specific balance");
+        System.out.println("3. Get the user with maximum balance");
+        System.out.println("4. Total money in the bank");
+        System.out.println("5. Total number of accounts in the bank");
+        System.out.println("6. Get all users email");
+        System.out.println("7. Sort account by balance");
+        System.out.println("8. Exit");
+        return sc.nextInt();
+    }
+
     public int SavingsMenu(){
         System.out.println("1. Deposit");
         System.out.println("2. Withdraw");
@@ -100,6 +113,11 @@ public class ConsoleUI {
         System.out.println("Enter the amount you want to deposit:");
         return sc.nextDouble();
     }
+    public double amt(){
+        System.out.println("Enter the amount :");
+        return sc.nextDouble();
+    }
+
 
     public double withdraw(){
         System.out.println("Enter the amount you want to withdraw:");
