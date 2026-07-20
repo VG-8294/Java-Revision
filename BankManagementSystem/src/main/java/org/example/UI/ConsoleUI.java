@@ -2,6 +2,7 @@ package org.example.UI;
 
 import org.example.DTO.LoginRequest;
 import org.example.DTO.RegisterRequest;
+import org.example.Enum.AccountType;
 import org.example.Validations.Validations;
 
 import java.util.*;
@@ -55,9 +56,12 @@ public class ConsoleUI {
                 "1. Saving\n" +
                 "2. Current");
         int accNo = sc.nextInt();
-        boolean acc = false;
+        AccountType acc;
         if(accNo == 1){
-            acc = true;
+            acc = AccountType.SAVING;
+        }
+        else{
+            acc = AccountType.CURRENT;
         }
         System.out.println("Enter your initial balance: ");
         double bal = sc.nextDouble();

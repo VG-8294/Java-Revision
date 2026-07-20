@@ -1,10 +1,13 @@
 package org.example.Entity;
 
+import org.example.Enum.AccountType;
+
 public abstract class BankAccount {
     protected double balance;
     protected double amount;
+    protected AccountType accountType;
 
-    public BankAccount(double balance){
+    public BankAccount(double balance, AccountType saving){
         this.balance = balance;
     }
 
@@ -18,6 +21,14 @@ public abstract class BankAccount {
 
     public double checkBalance(){
         return balance;
+    }
+
+    public AccountType getAccountType() {
+        return accountType;
+    }
+
+    public void setAccountType(AccountType accountType) {
+        this.accountType = accountType;
     }
 
     @Override
