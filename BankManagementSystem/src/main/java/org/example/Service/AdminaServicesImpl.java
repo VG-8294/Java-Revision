@@ -167,9 +167,9 @@ public class AdminaServicesImpl implements AdminServices{
 
     @Override
     public double getTotalMoney() {
-        return usersMap.entrySet()
+        return usersMap.values()
                 .stream()
-                .mapToDouble(x -> x.getValue().checkBalance())
+                .mapToDouble(BankAccount::checkBalance)
                 .sum();
     }
 
