@@ -1,14 +1,16 @@
 package org.example.DTO;
 
+import org.example.Enum.AccountType;
+
 public class RegisterRequest {
     private String name;
     private String email;
     private String password;
     private int age;
-    private boolean acc;
+    private AccountType acc;
     private double initialAmt;
 
-    public RegisterRequest(String name, String email, String password, int age, boolean acc, double initialAmt) {
+    public RegisterRequest(String name, String email, String password, int age, AccountType acc, double initialAmt) {
         this.name = name;
         this.email = email;
         this.password = password;
@@ -49,11 +51,11 @@ public class RegisterRequest {
         this.age = age;
     }
 
-    public boolean isAcc() {
+    public AccountType isAcc() {
         return acc;
     }
 
-    public void setAcc(boolean acc) {
+    public void setAcc(AccountType acc) {
         this.acc = acc;
     }
 

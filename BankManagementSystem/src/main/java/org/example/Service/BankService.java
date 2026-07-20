@@ -3,6 +3,7 @@ package org.example.Service;
 import org.example.Entity.*;
 import org.example.DTO.LoginRequest;
 import org.example.DTO.RegisterRequest;
+import org.example.Enum.AccountType;
 import org.example.UI.ConsoleUI;
 import org.example.Validations.Validations;
 
@@ -210,7 +211,7 @@ public class BankService {
     private void registerUser(){
             RegisterRequest rr = ui.registerMenu();
             User user = new User(rr.getName(), rr.getEmail(), rr.getPassword(), rr.getAge());
-            if(rr.isAcc()){
+            if (rr.isAcc() == AccountType.SAVING) {
                 SavingsAccount sv = new SavingsAccount(rr.getInitialAmt());
                 usersMap.put(user, sv);
             }
@@ -231,7 +232,7 @@ public class BankService {
     }
 
     private boolean isSavings(BankAccount b){
-        return b instanceof SavingsAccount;
+        return b.getAccountType() == AccountType.SAVING;
     }
 
 
