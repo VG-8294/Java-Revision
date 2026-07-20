@@ -1,7 +1,8 @@
 package org.example;
 
 import org.example.Entity.*;
-import org.example.Service.BankService;
+import org.example.Service.AdminaServicesImpl;
+import org.example.Service.BankServiceImpl;
 import org.example.UI.ConsoleUI;
 import org.example.Validations.Validations;
 
@@ -83,7 +84,8 @@ public class Main {
         Validations valid = new Validations(usersMap);
         ConsoleUI ui = new ConsoleUI(valid);
         Admin admin = new Admin();
-        BankService bankService = new BankService(usersMap, ui, valid, admin);
+        AdminaServicesImpl adminServices = new AdminaServicesImpl(usersMap, ui, valid, admin);
+        BankServiceImpl bankService = new BankServiceImpl(usersMap, ui, valid, adminServices);
 
         bankService.start();
     }
