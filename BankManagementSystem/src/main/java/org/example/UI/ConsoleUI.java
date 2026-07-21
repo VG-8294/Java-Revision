@@ -3,7 +3,9 @@ package org.example.UI;
 import org.example.DTO.LoginRequest;
 import org.example.DTO.RegisterRequest;
 import org.example.Enum.AccountType;
-import org.example.Validations.Validations;
+import org.example.Exception.InvalidAgeException;
+import org.example.Exception.InvalidInputException;
+import org.example.Validations.ValidationImpl;
 
 import java.util.*;
 
@@ -11,9 +13,9 @@ import static java.lang.Math.abs;
 
 public class ConsoleUI {
     Scanner sc = new Scanner(System.in);
-    Validations valid;
+    ValidationImpl valid;
 
-    public ConsoleUI(Validations valid) {
+    public ConsoleUI(ValidationImpl valid) {
         this.valid = valid;
     }
 
@@ -22,9 +24,19 @@ public class ConsoleUI {
         System.out.println("2. Login to existing Account");
         System.out.println("3. Login as Admin");
         System.out.println("4. Exit");
-        System.out.println("Enter your choice: ");
-        int ch = sc.nextInt();
-        sc.nextLine();
+        int ch;
+        while(true){
+            try{
+                System.out.println("Enter your choice: ");
+                ch = sc.nextInt();
+                sc.nextLine();
+                valid.validateInput(4, ch);
+                break;
+            }
+            catch(InvalidInputException e){
+                System.out.println(e.getMessage());
+            }
+        }
         return ch;
     }
 
@@ -63,12 +75,21 @@ public class ConsoleUI {
         else{
             acc = AccountType.CURRENT;
         }
-        System.out.println("Enter your initial balance: ");
-        double bal = sc.nextDouble();
-        while(valid.validateBalance(bal)){
-            System.out.println("Your initial deposit should be atleast 10k");
-            System.out.println("Enter your initial balance: ");
-            bal = sc.nextDouble();
+        double bal;
+        while(true){
+            try{
+                System.out.println("Enter your initial balance: ");
+                bal = sc.nextDouble();
+                if(valid.validateBalance(bal)){
+                    System.out.println("Your initial deposit should be at least 10000.");
+                    continue;
+                }
+                break;
+            }
+            catch(InputMismatchException e){
+                System.out.println("Please enter a valid numeric amount.");
+                sc.next();
+            }
         }
         RegisterRequest rr = new RegisterRequest(name, email, pass, age, acc, bal);
         return rr;
@@ -110,17 +131,48 @@ public class ConsoleUI {
         System.out.println("13. Get Users b/w specific age");
         System.out.println("14. Get Users less than a specific balance");
         System.out.println("15. Exit");
-        return sc.nextInt();
+        int ch;
+        while(true){
+            try{
+                System.out.println("Enter your choice: ");
+                ch = sc.nextInt();
+                sc.nextLine();
+                valid.validateInput(15, ch);
+                break;
+            }
+            catch(InvalidInputException e){
+                System.out.println(e.getMessage());
+            }
+        }
+        return ch;
     }
 
     public List<Integer> askingAge(){
         System.out.println("Enter the range of age");
-        System.out.println("Enter starting age:");
-        int age1 = sc.nextInt();
-        System.out.println("Enter ending age:");
-        int age2 = sc.nextInt();
-        List<Integer> ageList = Arrays.asList(age1, age2);
-        return ageList;
+        int age1, age2;
+        while(true){
+            try{
+                System.out.println("Enter starting age:");
+                age1 = sc.nextInt();
+                valid.validateAge(age1);
+                break;
+            }
+            catch(InvalidAgeException e){
+                System.out.println(e.getMessage());
+            }
+        }
+        while(true){
+            try{
+                System.out.println("Enter ending age:");
+                age2 = sc.nextInt();
+                valid.validateAge(age2);
+                break;
+            }
+            catch(InvalidAgeException e){
+                System.out.println(e.getMessage());
+            }
+        }
+        return Arrays.asList(age1, age2);
     }
 
     public int SavingsMenu(){
@@ -129,8 +181,20 @@ public class ConsoleUI {
         System.out.println("3. Check your balance");
         System.out.println("4. Check your interest amount");
         System.out.println("5. Exit");
-        System.out.println("Enter your choice");
-        return sc.nextInt();
+        int ch;
+        while(true){
+            try{
+                System.out.println("Enter your choice: ");
+                ch = sc.nextInt();
+                sc.nextLine();
+                valid.validateInput(5, ch);
+                break;
+            }
+            catch(InvalidInputException e){
+                System.out.println(e.getMessage());
+            }
+        }
+        return ch;
     }
 
     public double deposit(){
@@ -160,8 +224,20 @@ public class ConsoleUI {
         System.out.println("2. Withdraw");
         System.out.println("3. Check your balance");
         System.out.println("4. Exit");
-        System.out.println("Enter your choice");
-        return sc.nextInt();
+        int ch;
+        while(true){
+            try{
+                System.out.println("Enter your choice: ");
+                ch = sc.nextInt();
+                sc.nextLine();
+                valid.validateInput(4, ch);
+                break;
+            }
+            catch(InvalidInputException e){
+                System.out.println(e.getMessage());
+            }
+        }
+        return ch;
     }
 
     public void interest(double inter){

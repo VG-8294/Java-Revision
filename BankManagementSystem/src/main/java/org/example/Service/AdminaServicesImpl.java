@@ -5,9 +5,8 @@ import org.example.Entity.Admin;
 import org.example.Entity.BankAccount;
 import org.example.Entity.SavingsAccount;
 import org.example.Entity.User;
-import org.example.Enum.AccountType;
 import org.example.UI.ConsoleUI;
-import org.example.Validations.Validations;
+import org.example.Validations.ValidationImpl;
 
 import java.util.Comparator;
 import java.util.List;
@@ -17,10 +16,10 @@ public class AdminaServicesImpl implements AdminServices{
 
     private final Map<User, BankAccount> usersMap ;
     private ConsoleUI ui;
-    Validations valid;
+    ValidationImpl valid;
     Admin admin;
 
-    public AdminaServicesImpl(Map<User, BankAccount> usersMap, ConsoleUI ui, Validations valid, Admin admin) {
+    public AdminaServicesImpl(Map<User, BankAccount> usersMap, ConsoleUI ui, ValidationImpl valid, Admin admin) {
         this.usersMap = usersMap;
         this.ui = ui;
         this.valid = valid;
@@ -29,7 +28,7 @@ public class AdminaServicesImpl implements AdminServices{
 
 
     @Override
-    public void loginAsAdmin() {
+    public void loginAsAdmin(){
         LoginRequest lr = ui.loginMenu();
         System.out.println(admin.getMail());
         if(admin.getMail().equals(lr.getEmail()) && admin.getPassword().equals(lr.getPassword())){

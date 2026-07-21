@@ -1,7 +1,9 @@
 package org.example.Service;
 
+import org.example.Exception.InvalidAgeException;
+
 public interface AdminServices {
-    void loginAsAdmin();
+    void loginAsAdmin() throws InvalidAgeException;
 
     void getUsersLessThanBal(double bal);
 

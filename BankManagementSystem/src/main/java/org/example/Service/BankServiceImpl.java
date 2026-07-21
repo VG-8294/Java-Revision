@@ -5,18 +5,16 @@ import org.example.DTO.LoginRequest;
 import org.example.DTO.RegisterRequest;
 import org.example.Enum.AccountType;
 import org.example.UI.ConsoleUI;
-import org.example.Validations.Validations;
+import org.example.Validations.ValidationImpl;
 
-import java.util.Comparator;
-import java.util.List;
 import java.util.Map;
 
 public class BankServiceImpl implements BankServices {
     private final Map<User, BankAccount> usersMap ;
     private ConsoleUI ui;
-    Validations valid;
+    ValidationImpl valid;
     AdminaServicesImpl adminServices;
-    public BankServiceImpl(Map<User, BankAccount> usersMap, ConsoleUI ui, Validations valid, AdminaServicesImpl adminServices) {
+    public BankServiceImpl(Map<User, BankAccount> usersMap, ConsoleUI ui, ValidationImpl valid, AdminaServicesImpl adminServices) {
         this.usersMap = usersMap;
         this.ui = ui;
         this.valid = valid;
@@ -24,7 +22,7 @@ public class BankServiceImpl implements BankServices {
     }
 
     @Override
-    public void start(){
+    public void start()  {
         boolean key = false;
         while (!key) {
             int ch = ui.mainMenu();
@@ -48,7 +46,7 @@ public class BankServiceImpl implements BankServices {
     }
 
     @Override
-    public void registerUser(){
+    public void registerUser() {
             RegisterRequest rr = ui.registerMenu();
             User user = new User(rr.getName(), rr.getEmail(), rr.getPassword(), rr.getAge());
             if (rr.isAcc() == AccountType.SAVING) {

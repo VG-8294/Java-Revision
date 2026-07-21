@@ -4,14 +4,14 @@ import org.example.Entity.*;
 import org.example.Service.AdminaServicesImpl;
 import org.example.Service.BankServiceImpl;
 import org.example.UI.ConsoleUI;
-import org.example.Validations.Validations;
+import org.example.Validations.ValidationImpl;
 
 import java.util.*;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
-    public static void main() {
+    public static void main(){
         Map<User, BankAccount> usersMap = new HashMap<>();
         usersMap.put(
                 new User("Aman", "aman@gmail.com", "Aman@123", 22),
@@ -81,7 +81,7 @@ public class Main {
                 new User("Mahesh Joshi", "mahesh@gmail.com", "Mahesh@123", 61),
                 new SavingsAccount(125000)
         );
-        Validations valid = new Validations(usersMap);
+        ValidationImpl valid = new ValidationImpl(usersMap);
         ConsoleUI ui = new ConsoleUI(valid);
         Admin admin = new Admin();
         AdminaServicesImpl adminServices = new AdminaServicesImpl(usersMap, ui, valid, admin);
