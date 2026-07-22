@@ -62,22 +62,23 @@ public class BankServiceImpl implements BankServices {
             if (rr.isAcc() == AccountType.SAVING) {
                 SavingsAccount sv = new SavingsAccount(rr.getInitialAmt());
                 usersMap.put(user, sv);
+                ui.congrats(sv.getAccNo());
             }
             else{
                 CurrentAccount ca = new CurrentAccount(rr.getInitialAmt(), 10000);
                 usersMap.put(user, ca);
+                ui.congrats(ca.getAccNo());
             }
-            ui.congrats();
         }
         catch (InvalidBalanceException e){
             System.out.println(e.getMessage());
         }
     }
     //Java 8 implementation - Streams
-    private BankAccount authenticate(String mail, String password){
+    private BankAccount authenticate(int accNo, String mail, String password){
         return usersMap.entrySet()
                 .stream()
-                .filter(entry -> entry.getKey().getEmail().equals(mail) && entry.getKey().getPassword().equals(password))
+                .filter(entry -> entry.getKey().getEmail().equals(mail) && entry.getKey().getPassword().equals(password) && entry.getValue().getAccNo() == accNo)
                 .map(Map.Entry::getValue)  // method-reference implementation
                 .findFirst()
                 .orElse(null);
@@ -90,7 +91,7 @@ public class BankServiceImpl implements BankServices {
     @Override
     public void loginUser(){
             LoginRequest lr = ui.loginMenu();
-            BankAccount b = authenticate(lr.getEmail(), lr.getPassword());
+            BankAccount b = authenticate(lr.getAccNo(), lr.getEmail(), lr.getPassword());
             if(b != null){
                 ui.greeting();
                 boolean innerKey = false;

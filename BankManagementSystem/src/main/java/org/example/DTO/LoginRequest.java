@@ -1,12 +1,18 @@
 package org.example.DTO;
 
 public class LoginRequest {
+    private int accNo;
     private String email;
     private String password;
 
-    public LoginRequest(String email, String password) {
+    public LoginRequest(int accNo, String email, String password) {
+        this.accNo = accNo;
         this.email = email;
         this.password = password;
+    }
+
+    public int getAccNo() {
+        return accNo;
     }
 
     public String getEmail() {

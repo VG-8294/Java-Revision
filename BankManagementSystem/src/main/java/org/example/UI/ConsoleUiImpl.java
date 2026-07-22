@@ -84,11 +84,13 @@ public class ConsoleUiImpl implements ConsoleUI{
 
     @Override
     public LoginRequest loginMenu(){
+        System.out.println("Enter Account Number:");
+        int accNo = sc.nextInt();
         System.out.println("Enter your email");
         String mail = sc.next();
         System.out.println("Enter your password");
         String password = sc.next();
-        return new LoginRequest(mail, password);
+        return new LoginRequest(accNo, mail, password);
     }
 
     @Override
@@ -233,8 +235,9 @@ public class ConsoleUiImpl implements ConsoleUI{
         System.out.println("Amount deposited!");
     }
 
-    public void congrats(){
+    public void congrats(int accNo){
         System.out.println("Congratulations, Your account has been created!");
+        System.out.println("Your account number is: " + accNo);
     }
 
 }

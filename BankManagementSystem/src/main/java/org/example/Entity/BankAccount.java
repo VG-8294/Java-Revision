@@ -3,12 +3,19 @@ package org.example.Entity;
 import org.example.Enum.AccountType;
 
 public abstract class BankAccount {
+    private static int nextAccNo = 1000;
+    protected int accNo;
     protected double balance;
     protected double amount;
     protected AccountType accountType;
 
     public BankAccount(double balance, AccountType saving){
         this.balance = balance;
+        this.accNo = nextAccNo++;
+    }
+
+    public int getAccNo() {
+        return accNo;
     }
 
     public void deposit(double amt){
@@ -34,8 +41,10 @@ public abstract class BankAccount {
     @Override
     public String toString() {
         return "BankAccount{" +
-                "balance=" + balance +
+                "Account Number =" + accNo +
+                ", balance=" + balance +
                 ", amount=" + amount +
+                ", accountType=" + accountType +
                 '}';
     }
 }

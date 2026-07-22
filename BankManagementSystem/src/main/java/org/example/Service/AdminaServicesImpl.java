@@ -123,7 +123,10 @@ public class AdminaServicesImpl implements AdminServices{
         usersMap.entrySet()
                 .stream()
                 .filter(x -> isSavings(x.getValue()))
-                .forEach(x-> System.out.println(x.getKey()));
+                .forEach(x-> {
+                    System.out.println(x.getKey());
+                    System.out.println("Account number: " + x.getValue().getAccNo());
+                });
     }
     @Override
     public void sortAllUsersByAge() {
