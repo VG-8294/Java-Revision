@@ -4,10 +4,13 @@ import org.example.Entity.*;
 import org.example.DTO.LoginRequest;
 import org.example.DTO.RegisterRequest;
 import org.example.Enum.AccountType;
+import org.example.Exception.InvalidBalanceException;
+import org.example.Exception.InvalidInputException;
 import org.example.UI.ConsoleUI;
 import org.example.Validations.ValidationImpl;
 
 import java.util.Map;
+import java.util.Scanner;
 
 public class BankServiceImpl implements BankServices {
     private final Map<User, BankAccount> usersMap ;
@@ -26,6 +29,12 @@ public class BankServiceImpl implements BankServices {
         boolean key = false;
         while (!key) {
             int ch = ui.mainMenu();
+            try{
+                valid.validateInput(4, ch);
+            }
+            catch (InvalidInputException e){
+                System.out.println(e.getMessage());
+            }
             switch (ch) {
                 case 1:
                     registerUser();
@@ -47,8 +56,10 @@ public class BankServiceImpl implements BankServices {
 
     @Override
     public void registerUser() {
+        try{
             RegisterRequest rr = ui.registerMenu();
             User user = new User(rr.getName(), rr.getEmail(), rr.getPassword(), rr.getAge());
+            valid.validateBalance(rr.getInitialAmt());
             if (rr.isAcc() == AccountType.SAVING) {
                 SavingsAccount sv = new SavingsAccount(rr.getInitialAmt());
                 usersMap.put(user, sv);
@@ -57,7 +68,11 @@ public class BankServiceImpl implements BankServices {
                 CurrentAccount ca = new CurrentAccount(rr.getInitialAmt(), 10000);
                 usersMap.put(user, ca);
             }
-           ui.congrats();
+            ui.congrats();
+        }
+        catch (InvalidBalanceException e){
+            System.out.println(e.getMessage());
+        }
     }
     //Java 8 implementation - Streams
     private BankAccount authenticate(String mail, String password){
@@ -122,6 +137,12 @@ public class BankServiceImpl implements BankServices {
                         case 3:
                             double balAmt = b.checkBalance();
                             if(isSavings(b)){
+                                try{
+                                    valid.validateBalance(balAmt);
+                                }
+                                catch (InvalidBalanceException e){
+                                    System.out.println(e.getMessage());
+                                }
                                 ui.balance(balAmt);
                             }
                             else{

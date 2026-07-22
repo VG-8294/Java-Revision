@@ -4,6 +4,7 @@ import org.example.DTO.LoginRequest;
 import org.example.DTO.RegisterRequest;
 import org.example.Enum.AccountType;
 import org.example.Exception.InvalidAgeException;
+import org.example.Exception.InvalidBalanceException;
 import org.example.Exception.InvalidInputException;
 import org.example.Validations.ValidationImpl;
 
@@ -24,19 +25,9 @@ public class ConsoleUI {
         System.out.println("2. Login to existing Account");
         System.out.println("3. Login as Admin");
         System.out.println("4. Exit");
-        int ch;
-        while(true){
-            try{
-                System.out.println("Enter your choice: ");
-                ch = sc.nextInt();
-                sc.nextLine();
-                valid.validateInput(4, ch);
-                break;
-            }
-            catch(InvalidInputException e){
-                System.out.println(e.getMessage());
-            }
-        }
+        System.out.println("Enter your choice: ");
+        int ch =  sc.nextInt();
+        sc.nextLine();
         return ch;
     }
 
@@ -80,10 +71,6 @@ public class ConsoleUI {
             try{
                 System.out.println("Enter your initial balance: ");
                 bal = sc.nextDouble();
-                if(valid.validateBalance(bal)){
-                    System.out.println("Your initial deposit should be at least 10000.");
-                    continue;
-                }
                 break;
             }
             catch(InputMismatchException e){
@@ -214,9 +201,6 @@ public class ConsoleUI {
 
     public void balance(double bal){
         System.out.println("Your bank balance is :" + bal);
-        if(valid.validateBalance(bal)){
-            System.out.println("Your balance should be atleast 10k otherwise a penalty of 1000 will be charged!");
-        }
     }
 
     public int currentMenu(){

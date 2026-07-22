@@ -1,11 +1,12 @@
 package org.example.Validations;
 
 import org.example.Exception.InvalidAgeException;
+import org.example.Exception.InvalidBalanceException;
 import org.example.Exception.InvalidInputException;
 
 public interface Validation {
     // Java - 8 implementation - Predicates
-    boolean validateBalance(double bal);
+    void validateBalance(double bal) throws InvalidBalanceException;
 
     // Java - 8 implementation - BiPredicates
     boolean validateBalSavings(double bal, double amt);

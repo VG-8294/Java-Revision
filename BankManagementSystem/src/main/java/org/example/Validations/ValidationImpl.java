@@ -3,6 +3,7 @@ package org.example.Validations;
 import org.example.Entity.BankAccount;
 import org.example.Entity.User;
 import org.example.Exception.InvalidAgeException;
+import org.example.Exception.InvalidBalanceException;
 import org.example.Exception.InvalidInputException;
 
 import java.util.Map;
@@ -17,9 +18,11 @@ public class ValidationImpl implements Validation{
 
     // Java - 8 implementation - Predicates
     @Override
-    public boolean validateBalance(double bal){
+    public void validateBalance(double bal) throws InvalidBalanceException {
         Predicate<Double> pred = x -> x < 10000;
-        return pred.test(bal);
+        if(pred.test(bal)){
+            throw new InvalidBalanceException("Balance less then 10k");
+        }
     }
 
     // Java - 8 implementation - BiPredicates
