@@ -3,7 +3,7 @@ package org.example;
 import org.example.Entity.*;
 import org.example.Service.AdminaServicesImpl;
 import org.example.Service.BankServiceImpl;
-import org.example.UI.ConsoleUI;
+import org.example.UI.ConsoleUiImpl;
 import org.example.Validations.ValidationImpl;
 
 import java.util.*;
@@ -82,7 +82,7 @@ public class Main {
                 new SavingsAccount(125000)
         );
         ValidationImpl valid = new ValidationImpl(usersMap);
-        ConsoleUI ui = new ConsoleUI(valid);
+        ConsoleUiImpl ui = new ConsoleUiImpl(valid);
         Admin admin = new Admin();
         AdminaServicesImpl adminServices = new AdminaServicesImpl(usersMap, ui, valid, admin);
         BankServiceImpl bankService = new BankServiceImpl(usersMap, ui, valid, adminServices);

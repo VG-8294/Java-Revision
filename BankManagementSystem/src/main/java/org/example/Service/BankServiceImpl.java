@@ -6,18 +6,17 @@ import org.example.DTO.RegisterRequest;
 import org.example.Enum.AccountType;
 import org.example.Exception.InvalidBalanceException;
 import org.example.Exception.InvalidInputException;
-import org.example.UI.ConsoleUI;
+import org.example.UI.ConsoleUiImpl;
 import org.example.Validations.ValidationImpl;
 
 import java.util.Map;
-import java.util.Scanner;
 
 public class BankServiceImpl implements BankServices {
     private final Map<User, BankAccount> usersMap ;
-    private ConsoleUI ui;
+    private ConsoleUiImpl ui;
     ValidationImpl valid;
     AdminaServicesImpl adminServices;
-    public BankServiceImpl(Map<User, BankAccount> usersMap, ConsoleUI ui, ValidationImpl valid, AdminaServicesImpl adminServices) {
+    public BankServiceImpl(Map<User, BankAccount> usersMap, ConsoleUiImpl ui, ValidationImpl valid, AdminaServicesImpl adminServices) {
         this.usersMap = usersMap;
         this.ui = ui;
         this.valid = valid;
@@ -97,12 +96,23 @@ public class BankServiceImpl implements BankServices {
                 boolean innerKey = false;
                 while (!innerKey) {
                     int ch;
-
                     if(isSavings(b)){
                         ch = ui.SavingsMenu();
+                        try{
+                            valid.validateInput(5, ch);
+                        }
+                        catch(InvalidInputException e){
+                            System.out.println(e.getMessage());
+                        }
                     }
                     else{
                         ch = ui.currentMenu();
+                        try{
+                            valid.validateInput(4, ch);
+                        }
+                        catch(InvalidInputException e){
+                            System.out.println(e.getMessage());
+                        }
                     }
                     switch (ch) {
                         case 1:

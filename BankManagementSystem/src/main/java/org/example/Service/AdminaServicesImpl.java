@@ -5,7 +5,8 @@ import org.example.Entity.Admin;
 import org.example.Entity.BankAccount;
 import org.example.Entity.SavingsAccount;
 import org.example.Entity.User;
-import org.example.UI.ConsoleUI;
+import org.example.Exception.InvalidInputException;
+import org.example.UI.ConsoleUiImpl;
 import org.example.Validations.ValidationImpl;
 
 import java.util.Comparator;
@@ -15,11 +16,11 @@ import java.util.Map;
 public class AdminaServicesImpl implements AdminServices{
 
     private final Map<User, BankAccount> usersMap ;
-    private ConsoleUI ui;
+    private ConsoleUiImpl ui;
     ValidationImpl valid;
     Admin admin;
 
-    public AdminaServicesImpl(Map<User, BankAccount> usersMap, ConsoleUI ui, ValidationImpl valid, Admin admin) {
+    public AdminaServicesImpl(Map<User, BankAccount> usersMap, ConsoleUiImpl ui, ValidationImpl valid, Admin admin) {
         this.usersMap = usersMap;
         this.ui = ui;
         this.valid = valid;
@@ -35,6 +36,12 @@ public class AdminaServicesImpl implements AdminServices{
             boolean key = false;
             while (!key) {
                 int ch = ui.AdminMenu();
+                try{
+                    valid.validateInput(15, ch);
+                }
+                catch (InvalidInputException e){
+                    System.out.println(e.getMessage());
+                }
                 switch (ch) {
                     case 1:
                         getUsersAlphabetically();
