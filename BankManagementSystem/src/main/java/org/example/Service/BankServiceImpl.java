@@ -15,8 +15,8 @@ public class BankServiceImpl implements BankServices {
     private final Map<User, BankAccount> usersMap ;
     private ConsoleUiImpl ui;
     ValidationImpl valid;
-    AdminaServicesImpl adminServices;
-    public BankServiceImpl(Map<User, BankAccount> usersMap, ConsoleUiImpl ui, ValidationImpl valid, AdminaServicesImpl adminServices) {
+    AdminServicesImpl adminServices;
+    public BankServiceImpl(Map<User, BankAccount> usersMap, ConsoleUiImpl ui, ValidationImpl valid, AdminServicesImpl adminServices) {
         this.usersMap = usersMap;
         this.ui = ui;
         this.valid = valid;

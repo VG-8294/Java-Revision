@@ -13,14 +13,14 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
-public class AdminaServicesImpl implements AdminServices{
+public class AdminServicesImpl implements AdminServices{
 
     private final Map<User, BankAccount> usersMap ;
     private ConsoleUiImpl ui;
     ValidationImpl valid;
     Admin admin;
 
-    public AdminaServicesImpl(Map<User, BankAccount> usersMap, ConsoleUiImpl ui, ValidationImpl valid, Admin admin) {
+    public AdminServicesImpl(Map<User, BankAccount> usersMap, ConsoleUiImpl ui, ValidationImpl valid, Admin admin) {
         this.usersMap = usersMap;
         this.ui = ui;
         this.valid = valid;
