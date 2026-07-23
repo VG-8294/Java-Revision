@@ -1,9 +1,14 @@
 package org.example;
 
 import org.example.Entity.*;
+import org.example.Exception.InvalidAgeException;
+import org.example.Service.AdminServices;
 import org.example.Service.AdminServicesImpl;
 import org.example.Service.BankServiceImpl;
+import org.example.Service.BankServices;
+import org.example.UI.ConsoleUI;
 import org.example.UI.ConsoleUiImpl;
+import org.example.Validations.Validation;
 import org.example.Validations.ValidationImpl;
 
 import java.util.*;
@@ -11,7 +16,7 @@ import java.util.*;
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
-    public static void main(){
+    public static void main() throws InvalidAgeException {
         Map<User, BankAccount> usersMap = new HashMap<>();
         usersMap.put(
                 new User("Aman", "aman@gmail.com", "Aman@123", 22),
@@ -81,11 +86,11 @@ public class Main {
                 new User("Mahesh Joshi", "mahesh@gmail.com", "Mahesh@123", 61),
                 new SavingsAccount(125000)
         );
-        ValidationImpl valid = new ValidationImpl(usersMap);
-        ConsoleUiImpl ui = new ConsoleUiImpl(valid);
+        Validation valid = new ValidationImpl(usersMap);
+        ConsoleUI ui = new ConsoleUiImpl(valid);
         Admin admin = new Admin();
-        AdminServicesImpl adminServices = new AdminServicesImpl(usersMap, ui, valid, admin);
-        BankServiceImpl bankService = new BankServiceImpl(usersMap, ui, valid, adminServices);
+        AdminServices adminServices = new AdminServicesImpl(usersMap, ui, valid, admin);
+        BankServices bankService = new BankServiceImpl(usersMap, ui, valid, adminServices);
 
         bankService.start();
     }

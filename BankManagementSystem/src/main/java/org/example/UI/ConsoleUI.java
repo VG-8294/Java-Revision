@@ -31,4 +31,20 @@ public interface ConsoleUI {
     void balance(double bal);
 
     int currentMenu();
+
+    void interest(double inter);
+
+    void warning();
+
+    void withdrawWarnSavings();
+
+    void withdrawWarnCurrent();
+
+    void withdrawGreet();
+
+    void withdrawGreetCurr(Double amt);
+
+    void depositGreet();
+
+    void congrats(int accNo);
 }

@@ -4,7 +4,8 @@ import org.example.DTO.LoginRequest;
 import org.example.DTO.RegisterRequest;
 import org.example.Enum.AccountType;
 import org.example.Exception.InvalidAgeException;
-import org.example.Validations.ValidationImpl;
+import org.example.Exception.InvalidBalanceException;
+import org.example.Validations.Validation;
 
 import java.util.*;
 
@@ -12,9 +13,9 @@ import static java.lang.Math.abs;
 
 public class ConsoleUiImpl implements ConsoleUI{
     Scanner sc = new Scanner(System.in);
-    ValidationImpl valid;
+    private final Validation valid;
 
-    public ConsoleUiImpl(ValidationImpl valid) {
+    public ConsoleUiImpl(Validation valid) {
         this.valid = valid;
     }
 
@@ -71,11 +72,15 @@ public class ConsoleUiImpl implements ConsoleUI{
             try{
                 System.out.println("Enter your initial balance: ");
                 bal = sc.nextDouble();
+                valid.validateBalance(bal);
                 break;
             }
             catch(InputMismatchException e){
                 System.out.println("Please enter a valid numeric amount.");
                 sc.next();
+            }
+            catch (InvalidBalanceException e){
+                System.out.println(e.getMessage());
             }
         }
         RegisterRequest rr = new RegisterRequest(name, email, pass, age, acc, bal);
@@ -206,35 +211,43 @@ public class ConsoleUiImpl implements ConsoleUI{
         return ch;
     }
 
+    @Override
     public void interest(double inter){
         System.out.println("Your interest amount is: " + inter);
     }
 
+    @Override
     public void warning(){
         System.out.println("Invalid email or password!");
     }
 
+    @Override
     public void withdrawWarnSavings(){
         System.out.println("Balance is not enough");
     }
 
+    @Override
     public void withdrawWarnCurrent(){
         System.out.println("Overdraft limit exceeded");
     }
 
 
+    @Override
     public void withdrawGreet(){
         System.out.println("Successfully withdrawn");
     }
 
+    @Override
     public void withdrawGreetCurr(Double amt){
         System.out.println("But you owe bank a sum of " + abs(amt));
     }
 
+    @Override
     public void depositGreet(){
         System.out.println("Amount deposited!");
     }
 
+    @Override
     public void congrats(int accNo){
         System.out.println("Congratulations, Your account has been created!");
         System.out.println("Your account number is: " + accNo);

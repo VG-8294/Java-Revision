@@ -4,19 +4,28 @@ import org.example.Entity.*;
 import org.example.DTO.LoginRequest;
 import org.example.DTO.RegisterRequest;
 import org.example.Enum.AccountType;
+import org.example.Exception.InvalidAgeException;
 import org.example.Exception.InvalidBalanceException;
 import org.example.Exception.InvalidInputException;
+import org.example.UI.ConsoleUI;
 import org.example.UI.ConsoleUiImpl;
+import org.example.Validations.Validation;
 import org.example.Validations.ValidationImpl;
 
 import java.util.Map;
 
 public class BankServiceImpl implements BankServices {
-    private final Map<User, BankAccount> usersMap ;
-    private ConsoleUiImpl ui;
-    ValidationImpl valid;
-    AdminServicesImpl adminServices;
-    public BankServiceImpl(Map<User, BankAccount> usersMap, ConsoleUiImpl ui, ValidationImpl valid, AdminServicesImpl adminServices) {
+    private final Map<User, BankAccount> usersMap;
+    private final ConsoleUI ui;
+    private final Validation valid;
+    private final AdminServices adminServices;
+
+    public BankServiceImpl(
+            Map<User, BankAccount> usersMap,
+            ConsoleUI ui,
+            Validation valid,
+            AdminServices adminServices) {
+
         this.usersMap = usersMap;
         this.ui = ui;
         this.valid = valid;
@@ -24,7 +33,7 @@ public class BankServiceImpl implements BankServices {
     }
 
     @Override
-    public void start()  {
+    public void start() throws InvalidAgeException {
         boolean key = false;
         while (!key) {
             int ch = ui.mainMenu();
@@ -55,10 +64,8 @@ public class BankServiceImpl implements BankServices {
 
     @Override
     public void registerUser() {
-        try{
             RegisterRequest rr = ui.registerMenu();
             User user = new User(rr.getName(), rr.getEmail(), rr.getPassword(), rr.getAge());
-            valid.validateBalance(rr.getInitialAmt());
             if (rr.isAcc() == AccountType.SAVING) {
                 SavingsAccount sv = new SavingsAccount(rr.getInitialAmt());
                 usersMap.put(user, sv);
@@ -69,10 +76,6 @@ public class BankServiceImpl implements BankServices {
                 usersMap.put(user, ca);
                 ui.congrats(ca.getAccNo());
             }
-        }
-        catch (InvalidBalanceException e){
-            System.out.println(e.getMessage());
-        }
     }
     //Java 8 implementation - Streams
     private BankAccount authenticate(int accNo, String mail, String password){

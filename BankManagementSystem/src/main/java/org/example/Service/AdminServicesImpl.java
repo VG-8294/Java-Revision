@@ -6,7 +6,9 @@ import org.example.Entity.BankAccount;
 import org.example.Entity.SavingsAccount;
 import org.example.Entity.User;
 import org.example.Exception.InvalidInputException;
+import org.example.UI.ConsoleUI;
 import org.example.UI.ConsoleUiImpl;
+import org.example.Validations.Validation;
 import org.example.Validations.ValidationImpl;
 
 import java.util.Comparator;
@@ -15,12 +17,15 @@ import java.util.Map;
 
 public class AdminServicesImpl implements AdminServices{
 
-    private final Map<User, BankAccount> usersMap ;
-    private ConsoleUiImpl ui;
-    ValidationImpl valid;
-    Admin admin;
+    private final Map<User, BankAccount> usersMap;
+    private final ConsoleUI ui;
+    private final Validation valid;
+    private final Admin admin;
 
-    public AdminServicesImpl(Map<User, BankAccount> usersMap, ConsoleUiImpl ui, ValidationImpl valid, Admin admin) {
+    public AdminServicesImpl(Map<User, BankAccount> usersMap,
+                             ConsoleUI ui,
+                             Validation valid,
+                             Admin admin) {
         this.usersMap = usersMap;
         this.ui = ui;
         this.valid = valid;
